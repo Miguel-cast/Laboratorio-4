@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin123}
+      POSTGRES_DB:       ${POSTGRES_DB:-reservas_db}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - app-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL:                  postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-admin123}@db:5432/${POSTGRES_DB:-reservas_db}
+      SECRET_KEY:                    ${SECRET_KEY:-cambia_esta_clave}
+      ALGORITHM:                     ${ALGORITHM:-HS256}
+      ACCESS_TOKEN_EXPIRE_MINUTES:   ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      ADMIN_EMAIL:                   ${ADMIN_EMAIL:-admin@correo.com}
+      ADMIN_PASSWORD:                ${ADMIN_PASSWORD:-admin123}
+      ADMIN_NOMBRE:                  ${ADMIN_NOMBRE:-Administrador}
+    ports:
+      - "8000:8000"
+    networks:
+      - app-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: ${BACKEND_URL:-http://localhost:8000}
+    ports:
+      - "3000:80"
+    networks:
+      - app-net
+
+volumes:
+  pg_data:
+
+networks:
+  app-net:
+    driver: bridge
