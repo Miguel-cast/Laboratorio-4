@@ -13,8 +13,8 @@
 
 | Nombre | Rol |
 |--------|-----|
-|        |     |
-|        |     |
+|  Miguel Castaño | Back-end    |
+|  Juan Cardona  |  Fronat-end   |
 |        |     |
 
 ---
