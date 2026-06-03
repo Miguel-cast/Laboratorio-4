@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Reservas — Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-page">
+  <div class="auth-card">
+    <h1>Gestión de Reservas</h1>
+    <h2>Iniciar sesión</h2>
+
+    <div id="msg-login" class="msg hidden"></div>
+
+    <form id="form-login">
+      <label>Correo electrónico
+        <input type="email" id="correo" placeholder="usuario@correo.com" required />
+      </label>
+      <label>Contraseña
+        <input type="password" id="contrasena" placeholder="••••••••" required />
+      </label>
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <p class="alt-link">¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
