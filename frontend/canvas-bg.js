@@ -1,4 +1,6 @@
-/* canvas-bg.js — Dot Matrix WebGL background (Three.js r128, GLSL3) */
+/* canvas-bg.js — Dot Matrix WebGL background (Three.js r128, GLSL3)
+   Port fiel del CanvasRevealEffect: los puntos se revelan desde el
+   centro hacia los bordes con un destello breve al aparecer. */
 (function () {
   const canvas = document.getElementById("bg-canvas");
   if (!canvas || typeof THREE === "undefined") return;
@@ -14,16 +16,17 @@
 
   const res = new THREE.Vector2(window.innerWidth * dpr, window.innerHeight * dpr);
 
+  // Opacidades aleatorias por punto (como el componente original)
   const opacities = [0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 1.0];
-  const colorVecs = Array.from({ length: 6 }, () => new THREE.Vector3(1, 1, 1));
+  const colorVecs = Array.from({ length: 6 }, () => new THREE.Vector3(1, 1, 1)); // blanco
 
   const uniforms = {
     u_time:       { value: 0.0 },
     u_resolution: { value: res },
     u_opacities:  { value: opacities },
     u_colors:     { value: colorVecs },
-    u_total_size: { value: 20.0 },
-    u_dot_size:   { value: 3.0 },
+    u_total_size: { value: 22.0 }, // separación de la malla
+    u_dot_size:   { value: 5.0 },  // tamaño del punto (≈ dotSize 6 del original)
   };
 
   const material = new THREE.ShaderMaterial({
@@ -72,30 +75,30 @@
         float vis = step(0.0, st.x) * step(0.0, st.y);
         vec2 cell = vec2(floor(st.x / u_total_size), floor(st.y / u_total_size));
 
-        // Twinkling
+        // Parpadeo: cada punto cambia de opacidad cada ~5s
         float show_off = rand(cell);
         float r = rand(cell * floor(u_time / 5.0 + show_off + 5.0));
         float op = u_opacities[int(r * 10.0)];
 
-        // Dot pixel mask
+        // Máscara del píxel del punto
         op *= 1.0 - step(u_dot_size / u_total_size, fract(st.x / u_total_size));
         op *= 1.0 - step(u_dot_size / u_total_size, fract(st.y / u_total_size));
         op *= vis;
 
         vec3 color = u_colors[int(show_off * 6.0)];
 
-        // Reveal animation: dots sweep outward from center
+        // Reveal: los puntos se esparcen desde el centro hacia TODA la pantalla
         vec2 center_cell = floor(u_resolution / (2.0 * u_total_size));
         float dist = distance(center_cell, cell);
-        float t = u_time * 0.3;
-        float reveal_off = dist * 0.01 + rand(cell) * 0.15;
+        float t = u_time * 0.35;                       // mas lento => se aprecia la ola
+        float reveal_off = dist * 0.016 + rand(cell) * 0.18;
 
         op *= step(reveal_off, t);
-        // Brief brightness flash as each dot appears
-        op *= clamp((1.0 - step(reveal_off + 0.1, t)) * 1.25, 1.0, 1.25);
+        // Frente de onda mas brillante: cada punto destella al aparecer
+        op *= clamp((1.0 - step(reveal_off + 0.12, t)) * 1.6, 1.0, 1.6);
 
         fragColor = vec4(color, op);
-        fragColor.rgb *= fragColor.a;
+        fragColor.rgb *= fragColor.a; // premultiplica alpha
       }
     `,
   });

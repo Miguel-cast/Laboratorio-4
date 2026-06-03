@@ -6,7 +6,7 @@
   <title>Reservas Institucionales — Crear cuenta</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="dark-page">
@@ -17,11 +17,14 @@
   <div class="bg-bottom"></div>
 
   <header class="mini-nav">
-    <div class="logo-dots">
+    <div class="nav-logo">
       <span></span><span></span><span></span><span></span>
     </div>
-    <span class="nav-title">Reservas Institucionales</span>
-    <a href="index.html" class="nav-link">Iniciar sesión</a>
+    <span class="nav-brand">Reservas</span>
+    <a href="index.html" class="nav-cta-wrap">
+      <span class="nav-cta-glow"></span>
+      <span class="nav-cta">Iniciar sesión</span>
+    </a>
   </header>
 
   <main class="auth-main">
@@ -36,62 +39,50 @@
 
       <form id="form-register" autocomplete="on" novalidate>
 
-        <div class="field-group">
-          <div class="field">
-            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.25"/>
-              <path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-            </svg>
-            <input
-              type="text"
-              id="nombre"
-              name="name"
-              placeholder="Nombre completo"
-              required
-              autocomplete="name"
-            />
-          </div>
-          <div class="field-sep"></div>
-          <div class="field">
-            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
-              <path d="M2.5 6.667L10 11.25l7.5-4.583M2.5 6.667v8.333h15V6.667M2.5 6.667L10 2.5l7.5 4.167" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
-            </svg>
-            <input
-              type="email"
-              id="correo"
-              name="email"
-              placeholder="correo@institución.edu"
-              required
-              autocomplete="email"
-            />
-          </div>
-          <div class="field-sep"></div>
-          <div class="field">
-            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
-              <rect x="3.5" y="8.5" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
-              <path d="M7 8.5V6a3 3 0 0 1 6 0v2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-              <circle cx="10" cy="13" r="1" fill="currentColor"/>
-            </svg>
-            <input
-              type="password"
-              id="contrasena"
-              name="password"
-              placeholder="Mínimo 6 caracteres"
-              required
-              autocomplete="new-password"
-              minlength="6"
-            />
-            <button type="submit" class="arrow-btn" aria-label="Crear cuenta">
-              <svg viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
+        <div class="pill-field">
+          <input
+            type="text"
+            id="nombre"
+            name="name"
+            class="auth-pill"
+            placeholder="Nombre completo"
+            required
+            autocomplete="name"
+          />
         </div>
 
-        <button type="submit" class="btn-solid">
-          Crear cuenta
-        </button>
+        <div class="pill-field">
+          <input
+            type="email"
+            id="correo"
+            name="email"
+            class="auth-pill"
+            placeholder="correo@institución.edu"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="pill-field">
+          <input
+            type="password"
+            id="contrasena"
+            name="password"
+            class="auth-pill"
+            placeholder="Mínimo 6 caracteres"
+            required
+            autocomplete="new-password"
+            minlength="6"
+          />
+          <button type="submit" class="arrow-btn" aria-label="Crear cuenta">
+            <span class="arrow-track">
+              <span>→</span>
+              <span>→</span>
+            </span>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-solid">Crear cuenta</button>
 
       </form>
 
@@ -110,9 +101,7 @@
     </div>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-          integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVvcKBpAWIA/IAUSIzmPiYvzEKr2QZNfDcg=="
-          crossorigin="anonymous"></script>
+  <script src="three.min.js"></script>
   <script src="config.js"></script>
   <script src="canvas-bg.js"></script>
   <script src="auth.js"></script>

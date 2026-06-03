@@ -6,29 +6,32 @@
   <title>Reservas Institucionales — Iniciar sesión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="dark-page">
 
-  <!-- WebGL canvas (dot matrix background) -->
+  <!-- Fondo WebGL (dot matrix reveal) -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Gradient overlays -->
+  <!-- Overlays de gradiente -->
   <div class="bg-radial"></div>
   <div class="bg-top"></div>
   <div class="bg-bottom"></div>
 
-  <!-- Mini navbar -->
+  <!-- Navbar flotante -->
   <header class="mini-nav">
-    <div class="logo-dots">
+    <div class="nav-logo">
       <span></span><span></span><span></span><span></span>
     </div>
-    <span class="nav-title">Reservas Institucionales</span>
-    <a href="register.html" class="nav-link">Crear cuenta</a>
+    <span class="nav-brand">Reservas</span>
+    <a href="register.html" class="nav-cta-wrap">
+      <span class="nav-cta-glow"></span>
+      <span class="nav-cta">Crear cuenta</span>
+    </a>
   </header>
 
-  <!-- Auth content -->
+  <!-- Contenido -->
   <main class="auth-main">
     <div class="auth-wrap">
 
@@ -41,46 +44,37 @@
 
       <form id="form-login" autocomplete="on" novalidate>
 
-        <div class="field-group">
-          <div class="field">
-            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
-              <path d="M2.5 6.667L10 11.25l7.5-4.583M2.5 6.667v8.333h15V6.667M2.5 6.667L10 2.5l7.5 4.167" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
-            </svg>
-            <input
-              type="email"
-              id="correo"
-              name="email"
-              placeholder="correo@institución.edu"
-              required
-              autocomplete="email"
-            />
-          </div>
-          <div class="field-sep"></div>
-          <div class="field">
-            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
-              <rect x="3.5" y="8.5" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
-              <path d="M7 8.5V6a3 3 0 0 1 6 0v2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-              <circle cx="10" cy="13" r="1" fill="currentColor"/>
-            </svg>
-            <input
-              type="password"
-              id="contrasena"
-              name="password"
-              placeholder="Contraseña"
-              required
-              autocomplete="current-password"
-            />
-            <button type="submit" class="arrow-btn" aria-label="Iniciar sesión">
-              <svg viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
+        <div class="pill-field">
+          <input
+            type="email"
+            id="correo"
+            name="email"
+            class="auth-pill"
+            placeholder="correo@institución.edu"
+            required
+            autocomplete="email"
+          />
         </div>
 
-        <button type="submit" class="btn-solid" id="btn-login">
-          Iniciar sesión
-        </button>
+        <div class="pill-field">
+          <input
+            type="password"
+            id="contrasena"
+            name="password"
+            class="auth-pill"
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          />
+          <button type="submit" class="arrow-btn" aria-label="Iniciar sesión">
+            <span class="arrow-track">
+              <span>→</span>
+              <span>→</span>
+            </span>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-solid">Iniciar sesión</button>
 
       </form>
 
@@ -88,7 +82,7 @@
         <span></span><small>¿nuevo aquí?</small><span></span>
       </div>
 
-      <a href="register.html" class="btn-ghost">Crear cuenta →</a>
+      <a href="register.html" class="btn-ghost">Crear una cuenta →</a>
 
       <p class="legal-note">
         Al ingresar aceptas nuestros
@@ -99,9 +93,7 @@
     </div>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-          integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVvcKBpAWIA/IAUSIzmPiYvzEKr2QZNfDcg=="
-          crossorigin="anonymous"></script>
+  <script src="three.min.js"></script>
   <script src="config.js"></script>
   <script src="canvas-bg.js"></script>
   <script src="auth.js"></script>

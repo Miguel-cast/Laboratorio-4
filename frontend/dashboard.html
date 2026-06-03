@@ -3,114 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión de Reservas — Panel</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Reservas Institucionales — Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
-<body>
-  <!-- HEADER -->
-  <header>
-    <div class="header-inner">
-      <span class="logo">Reservas Institucionales</span>
-      <div class="header-right">
-        <span id="user-info"></span>
-        <button id="btn-logout" class="btn-sm btn-danger">Cerrar sesión</button>
+<body class="dash">
+
+  <!-- Fondo -->
+  <div class="aurora"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo"><span></span><span></span><span></span><span></span></div>
+      <div class="brand-name">Reservas<small>Institucionales</small></div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav-pill" id="nav-pill"></div>
+      <button class="nav-item active" data-view="inicio">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 10.5L10 4l7 6.5M5 9v7h10V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Inicio
+      </button>
+      <button class="nav-item" data-view="espacios">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        Espacios
+      </button>
+      <button class="nav-item" data-view="reservas">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14M7 2v4M13 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span id="reservas-tab-label">Mis reservas</span>
+      </button>
+      <button class="nav-item admin-only hidden" data-view="usuarios">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Usuarios
+      </button>
+    </nav>
+
+    <div class="user-chip">
+      <div class="user-meta">
+        <div class="uname" id="uname">—</div>
+        <div class="urole" id="urole">—</div>
       </div>
+      <div class="avatar" id="avatar">U</div>
+      <button class="icon-btn" id="btn-logout" title="Cerrar sesión">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M8 17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3M13 14l4-4-4-4M17 10H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </header>
 
-  <!-- TABS -->
-  <nav class="tabs">
-    <button class="tab active" data-tab="espacios">Espacios</button>
-    <button class="tab" data-tab="reservas">Mis reservas</button>
-    <!-- Solo admin -->
-    <button class="tab admin-only hidden" data-tab="gestionar-espacios">Gestionar espacios</button>
-    <button class="tab admin-only hidden" data-tab="todas-reservas">Todas las reservas</button>
-    <button class="tab admin-only hidden" data-tab="usuarios">Usuarios</button>
-  </nav>
+  <!-- Contenido -->
+  <div class="shell">
 
-  <main>
-    <div id="msg-global" class="msg hidden"></div>
-
-    <!-- ── ESPACIOS (usuario/admin: ver lista) ── -->
-    <section id="tab-espacios" class="tab-content active">
-      <h2>Espacios disponibles</h2>
-      <div id="lista-espacios" class="card-grid"></div>
-
-      <!-- Formulario crear reserva -->
-      <div id="panel-reserva" class="panel hidden">
-        <h3>Nueva reserva — <span id="nombre-espacio-sel"></span></h3>
-        <div id="msg-reserva" class="msg hidden"></div>
-        <form id="form-reserva">
-          <input type="hidden" id="espacio-sel-id" />
-          <label>Fecha
-            <input type="date" id="res-fecha" required />
-          </label>
-          <label>Hora inicio
-            <input type="time" id="res-inicio" required />
-          </label>
-          <label>Hora fin
-            <input type="time" id="res-fin" required />
-          </label>
-          <label>Cantidad de asistentes
-            <input type="number" id="res-asistentes" min="1" required />
-          </label>
-          <div class="form-row">
-            <button type="submit">Confirmar reserva</button>
-            <button type="button" id="btn-cancelar-panel">Cancelar</button>
-          </div>
-        </form>
+    <!-- ── INICIO ── -->
+    <section class="view active" id="view-inicio">
+      <div class="view-head">
+        <div>
+          <h1 id="greeting">Hola</h1>
+          <p>Resumen de tu actividad en el sistema</p>
+        </div>
       </div>
+      <div class="stats" id="stats"></div>
+      <div class="view-head" style="margin-top:0.5rem"><div><h1 style="font-size:1.15rem">Reservas recientes</h1></div></div>
+      <div id="recent"></div>
     </section>
 
-    <!-- ── MIS RESERVAS ── -->
-    <section id="tab-reservas" class="tab-content hidden">
-      <h2>Mis reservas</h2>
-      <div id="lista-mis-reservas"></div>
-    </section>
-
-    <!-- ── GESTIONAR ESPACIOS (admin) ── -->
-    <section id="tab-gestionar-espacios" class="tab-content hidden admin-only">
-      <h2>Gestionar espacios</h2>
-      <button id="btn-nuevo-espacio" class="btn-primary">+ Nuevo espacio</button>
-
-      <div id="form-espacio-wrap" class="panel hidden">
-        <h3 id="titulo-form-espacio">Nuevo espacio</h3>
-        <div id="msg-espacio" class="msg hidden"></div>
-        <form id="form-espacio">
-          <input type="hidden" id="espacio-edit-id" />
-          <label>Nombre <input type="text" id="esp-nombre" required /></label>
-          <label>Ubicación <input type="text" id="esp-ubicacion" required /></label>
-          <label>Capacidad <input type="number" id="esp-capacidad" min="1" required /></label>
-          <label>Estado
-            <select id="esp-estado">
-              <option value="activo">Activo</option>
-              <option value="inactivo">Inactivo</option>
-              <option value="en mantenimiento">En mantenimiento</option>
-              <option value="no disponible">No disponible</option>
-            </select>
-          </label>
-          <div class="form-row">
-            <button type="submit">Guardar</button>
-            <button type="button" id="btn-cancelar-espacio">Cancelar</button>
-          </div>
-        </form>
+    <!-- ── ESPACIOS ── -->
+    <section class="view" id="view-espacios">
+      <div class="view-head">
+        <div>
+          <h1>Espacios <em>institucionales</em></h1>
+          <p id="espacios-sub">Selecciona un espacio para reservar</p>
+        </div>
+        <button class="btn btn-primary admin-only hidden" id="btn-nuevo-espacio">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nuevo espacio
+        </button>
       </div>
-
-      <div id="lista-admin-espacios" class="card-grid"></div>
+      <div class="grid" id="lista-espacios"></div>
     </section>
 
-    <!-- ── TODAS LAS RESERVAS (admin) ── -->
-    <section id="tab-todas-reservas" class="tab-content hidden admin-only">
-      <h2>Todas las reservas</h2>
-      <div id="lista-todas-reservas"></div>
+    <!-- ── RESERVAS ── -->
+    <section class="view" id="view-reservas">
+      <div class="view-head">
+        <div>
+          <h1 id="reservas-title">Mis <em>reservas</em></h1>
+          <p id="reservas-sub">Historial y estado de tus solicitudes</p>
+        </div>
+      </div>
+      <div id="lista-reservas"></div>
     </section>
 
     <!-- ── USUARIOS (admin) ── -->
-    <section id="tab-usuarios" class="tab-content hidden admin-only">
-      <h2>Usuarios registrados</h2>
+    <section class="view" id="view-usuarios">
+      <div class="view-head">
+        <div>
+          <h1>Usuarios <em>registrados</em></h1>
+          <p>Gestiona las cuentas del sistema</p>
+        </div>
+      </div>
       <div id="lista-usuarios"></div>
     </section>
-  </main>
+
+  </div>
+
+  <!-- Modal & toasts -->
+  <div class="modal-root" id="modal-root"></div>
+  <div class="toast-root" id="toast-root"></div>
 
   <script src="config.js"></script>
   <script src="api.js"></script>
