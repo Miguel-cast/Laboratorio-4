@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Reservas — Panel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <span class="logo">Reservas Institucionales</span>
+      <div class="header-right">
+        <span id="user-info"></span>
+        <button id="btn-logout" class="btn-sm btn-danger">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tabs">
+    <button class="tab active" data-tab="espacios">Espacios</button>
+    <button class="tab" data-tab="reservas">Mis reservas</button>
+    <!-- Solo admin -->
+    <button class="tab admin-only hidden" data-tab="gestionar-espacios">Gestionar espacios</button>
+    <button class="tab admin-only hidden" data-tab="todas-reservas">Todas las reservas</button>
+    <button class="tab admin-only hidden" data-tab="usuarios">Usuarios</button>
+  </nav>
+
+  <main>
+    <div id="msg-global" class="msg hidden"></div>
+
+    <!-- ── ESPACIOS (usuario/admin: ver lista) ── -->
+    <section id="tab-espacios" class="tab-content active">
+      <h2>Espacios disponibles</h2>
+      <div id="lista-espacios" class="card-grid"></div>
+
+      <!-- Formulario crear reserva -->
+      <div id="panel-reserva" class="panel hidden">
+        <h3>Nueva reserva — <span id="nombre-espacio-sel"></span></h3>
+        <div id="msg-reserva" class="msg hidden"></div>
+        <form id="form-reserva">
+          <input type="hidden" id="espacio-sel-id" />
+          <label>Fecha
+            <input type="date" id="res-fecha" required />
+          </label>
+          <label>Hora inicio
+            <input type="time" id="res-inicio" required />
+          </label>
+          <label>Hora fin
+            <input type="time" id="res-fin" required />
+          </label>
+          <label>Cantidad de asistentes
+            <input type="number" id="res-asistentes" min="1" required />
+          </label>
+          <div class="form-row">
+            <button type="submit">Confirmar reserva</button>
+            <button type="button" id="btn-cancelar-panel">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ── MIS RESERVAS ── -->
+    <section id="tab-reservas" class="tab-content hidden">
+      <h2>Mis reservas</h2>
+      <div id="lista-mis-reservas"></div>
+    </section>
+
+    <!-- ── GESTIONAR ESPACIOS (admin) ── -->
+    <section id="tab-gestionar-espacios" class="tab-content hidden admin-only">
+      <h2>Gestionar espacios</h2>
+      <button id="btn-nuevo-espacio" class="btn-primary">+ Nuevo espacio</button>
+
+      <div id="form-espacio-wrap" class="panel hidden">
+        <h3 id="titulo-form-espacio">Nuevo espacio</h3>
+        <div id="msg-espacio" class="msg hidden"></div>
+        <form id="form-espacio">
+          <input type="hidden" id="espacio-edit-id" />
+          <label>Nombre <input type="text" id="esp-nombre" required /></label>
+          <label>Ubicación <input type="text" id="esp-ubicacion" required /></label>
+          <label>Capacidad <input type="number" id="esp-capacidad" min="1" required /></label>
+          <label>Estado
+            <select id="esp-estado">
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+              <option value="en mantenimiento">En mantenimiento</option>
+              <option value="no disponible">No disponible</option>
+            </select>
+          </label>
+          <div class="form-row">
+            <button type="submit">Guardar</button>
+            <button type="button" id="btn-cancelar-espacio">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="lista-admin-espacios" class="card-grid"></div>
+    </section>
+
+    <!-- ── TODAS LAS RESERVAS (admin) ── -->
+    <section id="tab-todas-reservas" class="tab-content hidden admin-only">
+      <h2>Todas las reservas</h2>
+      <div id="lista-todas-reservas"></div>
+    </section>
+
+    <!-- ── USUARIOS (admin) ── -->
+    <section id="tab-usuarios" class="tab-content hidden admin-only">
+      <h2>Usuarios registrados</h2>
+      <div id="lista-usuarios"></div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

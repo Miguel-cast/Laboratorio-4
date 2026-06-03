@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Reservas — Registro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-page">
+  <div class="auth-card">
+    <h1>Gestión de Reservas</h1>
+    <h2>Crear cuenta</h2>
+
+    <div id="msg-register" class="msg hidden"></div>
+
+    <form id="form-register">
+      <label>Nombre completo
+        <input type="text" id="nombre" placeholder="Tu nombre" required />
+      </label>
+      <label>Correo electrónico
+        <input type="email" id="correo" placeholder="usuario@correo.com" required />
+      </label>
+      <label>Contraseña
+        <input type="password" id="contrasena" placeholder="Mínimo 6 caracteres" required minlength="6" />
+      </label>
+      <button type="submit">Registrarse</button>
+    </form>
+
+    <p class="alt-link">¿Ya tienes cuenta? <a href="index.html">Ingresar</a></p>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
