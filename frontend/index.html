@@ -3,30 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión de Reservas — Login</title>
+  <title>Reservas Institucionales — Iniciar sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="auth-page">
-  <div class="auth-card">
-    <h1>Gestión de Reservas</h1>
-    <h2>Iniciar sesión</h2>
+<body class="dark-page">
 
-    <div id="msg-login" class="msg hidden"></div>
+  <!-- Fondo WebGL (dot matrix reveal) -->
+  <canvas id="bg-canvas"></canvas>
 
-    <form id="form-login">
-      <label>Correo electrónico
-        <input type="email" id="correo" placeholder="usuario@correo.com" required />
-      </label>
-      <label>Contraseña
-        <input type="password" id="contrasena" placeholder="••••••••" required />
-      </label>
-      <button type="submit">Ingresar</button>
-    </form>
+  <!-- Overlays de gradiente -->
+  <div class="bg-radial"></div>
+  <div class="bg-top"></div>
+  <div class="bg-bottom"></div>
 
-    <p class="alt-link">¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
-  </div>
+  <!-- Navbar flotante -->
+  <header class="mini-nav">
+    <div class="nav-logo">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <span class="nav-brand">Reservas</span>
+    <a href="register.html" class="nav-cta-wrap">
+      <span class="nav-cta-glow"></span>
+      <span class="nav-cta">Crear cuenta</span>
+    </a>
+  </header>
 
+  <!-- Contenido -->
+  <main class="auth-main">
+    <div class="auth-wrap">
+
+      <div class="auth-heading">
+        <h1>Bienvenido<br /><em>de vuelta</em></h1>
+        <p>Inicia sesión para gestionar tus reservas</p>
+      </div>
+
+      <div id="msg-login" class="msg hidden"></div>
+
+      <form id="form-login" autocomplete="on" novalidate>
+
+        <div class="pill-field">
+          <input
+            type="email"
+            id="correo"
+            name="email"
+            class="auth-pill"
+            placeholder="correo@institución.edu"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="pill-field">
+          <input
+            type="password"
+            id="contrasena"
+            name="password"
+            class="auth-pill"
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          />
+          <button type="submit" class="arrow-btn" aria-label="Iniciar sesión">
+            <span class="arrow-track">
+              <span>→</span>
+              <span>→</span>
+            </span>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-solid">Iniciar sesión</button>
+
+      </form>
+
+      <div class="or-divider">
+        <span></span><small>¿nuevo aquí?</small><span></span>
+      </div>
+
+      <a href="register.html" class="btn-ghost">Crear una cuenta →</a>
+
+      <p class="legal-note">
+        Al ingresar aceptas nuestros
+        <a href="#">Términos de uso</a> y
+        <a href="#">Política de privacidad</a>.
+      </p>
+
+    </div>
+  </main>
+
+  <script src="three.min.js"></script>
   <script src="config.js"></script>
+  <script src="canvas-bg.js"></script>
   <script src="auth.js"></script>
 </body>
 </html>
