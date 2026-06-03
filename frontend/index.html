@@ -3,30 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión de Reservas — Login</title>
+  <title>Reservas Institucionales — Iniciar sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="auth-page">
-  <div class="auth-card">
-    <h1>Gestión de Reservas</h1>
-    <h2>Iniciar sesión</h2>
+<body class="dark-page">
 
-    <div id="msg-login" class="msg hidden"></div>
+  <!-- WebGL canvas (dot matrix background) -->
+  <canvas id="bg-canvas"></canvas>
 
-    <form id="form-login">
-      <label>Correo electrónico
-        <input type="email" id="correo" placeholder="usuario@correo.com" required />
-      </label>
-      <label>Contraseña
-        <input type="password" id="contrasena" placeholder="••••••••" required />
-      </label>
-      <button type="submit">Ingresar</button>
-    </form>
+  <!-- Gradient overlays -->
+  <div class="bg-radial"></div>
+  <div class="bg-top"></div>
+  <div class="bg-bottom"></div>
 
-    <p class="alt-link">¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
-  </div>
+  <!-- Mini navbar -->
+  <header class="mini-nav">
+    <div class="logo-dots">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <span class="nav-title">Reservas Institucionales</span>
+    <a href="register.html" class="nav-link">Crear cuenta</a>
+  </header>
 
+  <!-- Auth content -->
+  <main class="auth-main">
+    <div class="auth-wrap">
+
+      <div class="auth-heading">
+        <h1>Bienvenido<br /><em>de vuelta</em></h1>
+        <p>Inicia sesión para gestionar tus reservas</p>
+      </div>
+
+      <div id="msg-login" class="msg hidden"></div>
+
+      <form id="form-login" autocomplete="on" novalidate>
+
+        <div class="field-group">
+          <div class="field">
+            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
+              <path d="M2.5 6.667L10 11.25l7.5-4.583M2.5 6.667v8.333h15V6.667M2.5 6.667L10 2.5l7.5 4.167" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
+            </svg>
+            <input
+              type="email"
+              id="correo"
+              name="email"
+              placeholder="correo@institución.edu"
+              required
+              autocomplete="email"
+            />
+          </div>
+          <div class="field-sep"></div>
+          <div class="field">
+            <svg class="field-icon" viewBox="0 0 20 20" fill="none">
+              <rect x="3.5" y="8.5" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M7 8.5V6a3 3 0 0 1 6 0v2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+              <circle cx="10" cy="13" r="1" fill="currentColor"/>
+            </svg>
+            <input
+              type="password"
+              id="contrasena"
+              name="password"
+              placeholder="Contraseña"
+              required
+              autocomplete="current-password"
+            />
+            <button type="submit" class="arrow-btn" aria-label="Iniciar sesión">
+              <svg viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-solid" id="btn-login">
+          Iniciar sesión
+        </button>
+
+      </form>
+
+      <div class="or-divider">
+        <span></span><small>¿nuevo aquí?</small><span></span>
+      </div>
+
+      <a href="register.html" class="btn-ghost">Crear cuenta →</a>
+
+      <p class="legal-note">
+        Al ingresar aceptas nuestros
+        <a href="#">Términos de uso</a> y
+        <a href="#">Política de privacidad</a>.
+      </p>
+
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+          integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVvcKBpAWIA/IAUSIzmPiYvzEKr2QZNfDcg=="
+          crossorigin="anonymous"></script>
   <script src="config.js"></script>
+  <script src="canvas-bg.js"></script>
   <script src="auth.js"></script>
 </body>
 </html>
