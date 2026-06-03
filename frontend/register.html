@@ -3,33 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión de Reservas — Registro</title>
+  <title>Reservas Institucionales — Crear cuenta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="auth-page">
-  <div class="auth-card">
-    <h1>Gestión de Reservas</h1>
-    <h2>Crear cuenta</h2>
+<body class="dark-page">
 
-    <div id="msg-register" class="msg hidden"></div>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-radial"></div>
+  <div class="bg-top"></div>
+  <div class="bg-bottom"></div>
 
-    <form id="form-register">
-      <label>Nombre completo
-        <input type="text" id="nombre" placeholder="Tu nombre" required />
-      </label>
-      <label>Correo electrónico
-        <input type="email" id="correo" placeholder="usuario@correo.com" required />
-      </label>
-      <label>Contraseña
-        <input type="password" id="contrasena" placeholder="Mínimo 6 caracteres" required minlength="6" />
-      </label>
-      <button type="submit">Registrarse</button>
-    </form>
+  <header class="mini-nav">
+    <div class="nav-logo">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <span class="nav-brand">Reservas</span>
+    <a href="index.html" class="nav-cta-wrap">
+      <span class="nav-cta-glow"></span>
+      <span class="nav-cta">Iniciar sesión</span>
+    </a>
+  </header>
 
-    <p class="alt-link">¿Ya tienes cuenta? <a href="index.html">Ingresar</a></p>
-  </div>
+  <main class="auth-main">
+    <div class="auth-wrap">
 
+      <div class="auth-heading">
+        <h1>Crea tu<br /><em>cuenta</em></h1>
+        <p>Únete y empieza a reservar espacios institucionales</p>
+      </div>
+
+      <div id="msg-register" class="msg hidden"></div>
+
+      <form id="form-register" autocomplete="on" novalidate>
+
+        <div class="pill-field">
+          <input
+            type="text"
+            id="nombre"
+            name="name"
+            class="auth-pill"
+            placeholder="Nombre completo"
+            required
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="pill-field">
+          <input
+            type="email"
+            id="correo"
+            name="email"
+            class="auth-pill"
+            placeholder="correo@institución.edu"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="pill-field">
+          <input
+            type="password"
+            id="contrasena"
+            name="password"
+            class="auth-pill"
+            placeholder="Mínimo 6 caracteres"
+            required
+            autocomplete="new-password"
+            minlength="6"
+          />
+          <button type="submit" class="arrow-btn" aria-label="Crear cuenta">
+            <span class="arrow-track">
+              <span>→</span>
+              <span>→</span>
+            </span>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-solid">Crear cuenta</button>
+
+      </form>
+
+      <div class="or-divider">
+        <span></span><small>¿ya tienes cuenta?</small><span></span>
+      </div>
+
+      <a href="index.html" class="btn-ghost">Iniciar sesión →</a>
+
+      <p class="legal-note">
+        Al registrarte aceptas nuestros
+        <a href="#">Términos de uso</a> y
+        <a href="#">Política de privacidad</a>.
+      </p>
+
+    </div>
+  </main>
+
+  <script src="three.min.js"></script>
   <script src="config.js"></script>
+  <script src="canvas-bg.js"></script>
   <script src="auth.js"></script>
 </body>
 </html>
