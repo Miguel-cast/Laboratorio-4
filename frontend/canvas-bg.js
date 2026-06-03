@@ -87,15 +87,15 @@
 
         vec3 color = u_colors[int(show_off * 6.0)];
 
-        // Reveal desde el centro (intro) — factor de velocidad 0.5 como el original
+        // Reveal: los puntos se esparcen desde el centro hacia TODA la pantalla
         vec2 center_cell = floor(u_resolution / (2.0 * u_total_size));
         float dist = distance(center_cell, cell);
-        float t = u_time * 0.5;
-        float reveal_off = dist * 0.01 + rand(cell) * 0.15;
+        float t = u_time * 0.35;                       // mas lento => se aprecia la ola
+        float reveal_off = dist * 0.016 + rand(cell) * 0.18;
 
         op *= step(reveal_off, t);
-        // Destello breve cuando aparece cada punto
-        op *= clamp((1.0 - step(reveal_off + 0.1, t)) * 1.25, 1.0, 1.25);
+        // Frente de onda mas brillante: cada punto destella al aparecer
+        op *= clamp((1.0 - step(reveal_off + 0.12, t)) * 1.6, 1.0, 1.6);
 
         fragColor = vec4(color, op);
         fragColor.rgb *= fragColor.a; // premultiplica alpha
