@@ -58,6 +58,9 @@ body.dash {
           mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 85%);
 }
 
+/* ═══════════ Utilidades ═══════════ */
+.hidden { display: none !important; }
+
 /* ═══════════ Topbar ═══════════ */
 .topbar {
   position: sticky; top: 0; z-index: 40;
