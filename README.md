@@ -139,44 +139,88 @@ El sistema se despliega con **Docker Compose** en Linux o Windows (WSL), orquest
 
 ## 📖 Manual de uso
 
-> 🖼️ _Las siguientes imágenes son marcadores. Reemplaza cada URL por una captura real del sistema (sugerencia: súbelas a una carpeta `docs/img/` del repositorio)._
-
-### 1. Inicio de sesión y registro
-Accede con tu correo y contraseña. Si no tienes cuenta, regístrate desde el enlace inferior.
-
-![Inicio de sesión](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=1.+Inicio+de+sesion)
-
-### 2. Panel principal (dashboard)
-Tras iniciar sesión verás el panel con un resumen de tu actividad y la navegación por pestañas.
-
-![Dashboard](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=2.+Panel+principal)
-
-### 3. Consultar espacios y crear una reserva
-En **Espacios** explora los disponibles y pulsa **Reservar**: elige fecha, horario y número de asistentes. El sistema valida las reglas de negocio en el momento.
-
-![Crear reserva](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=3.+Crear+reserva)
-
-### 4. Consultar y cancelar tus reservas
-En **Mis reservas** revisas el estado de cada solicitud (esperando, aprobada, rechazada) y puedes cancelarlas.
-
-![Mis reservas](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=4.+Mis+reservas)
-
-### 5. Gestión de espacios y aprobación (administrador)
-El administrador crea/edita/elimina espacios y **aprueba o rechaza** las reservas pendientes.
-
-![Gestión admin](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=5.+Gestion+admin)
-
-### 6. Gestión de usuarios (administrador)
-Desde **Usuarios**, el administrador crea, edita y elimina cuentas, asignando el rol correspondiente.
-
-![Gestión de usuarios](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=6.+Gestion+de+usuarios)
-
-### 7. Mensajes de error y cierre de sesión
-Cuando una reserva incumple una regla, el sistema muestra un mensaje claro. Para salir, usa el botón de cerrar sesión.
-
-![Mensajes y logout](https://placehold.co/900x500/0c0e16/8b5cf6/png?text=7.+Mensajes+y+cierre+de+sesion)
-
 > **Credenciales de prueba:** `admin@correo.com / admin123` (administrador) · `usuario@correo.com / usuario123` (usuario).
+
+### 🔑 Acceso
+
+**Inicio de sesión.** Ingresa con tu correo y contraseña. El fondo está animado con shaders WebGL.
+
+![Inicio de sesión](capturas/img.png)
+
+**Registro.** Si no tienes cuenta, créala desde *“Crear cuenta”* indicando nombre, correo y contraseña.
+
+![Registro](capturas/img_1.png)
+
+---
+
+### 👤 Vista de usuario
+
+**Panel de inicio.** Resumen de tu actividad: tus reservas, en espera, aprobadas y espacios disponibles.
+
+![Panel de inicio (usuario)](capturas/img_2.png)
+
+**Espacios disponibles.** Explora los espacios institucionales y pulsa **Reservar** en el que necesites.
+
+![Espacios disponibles](capturas/img_3.png)
+
+**Crear una reserva.** Elige fecha, hora de inicio/fin y número de asistentes. El sistema valida en el momento las **9 reglas de negocio**.
+
+![Crear reserva](capturas/img_4.png)
+
+**Mis reservas.** Consulta el estado de cada solicitud (`esperando`, `aprobada`, `rechazada`) y cancélalas si lo necesitas.
+
+<table>
+<tr>
+<td width="50%"><img src="capturas/img_5.png" alt="Mis reservas" /></td>
+<td width="50%"><img src="capturas/img_6.png" alt="Cancelar reserva" /></td>
+</tr>
+<tr><td align="center"><sub>Listado de mis reservas</sub></td><td align="center"><sub>Confirmación de cancelación</sub></td></tr>
+</table>
+
+---
+
+### 🛡️ Vista de administrador
+
+**Panel de inicio (admin).** Métricas globales del sistema: espacios totales, reservas en espera, aprobadas y usuarios.
+
+![Panel de inicio (admin)](capturas/img_7.png)
+
+**Gestión de espacios.** Crea, edita y elimina espacios institucionales.
+
+![Gestión de espacios](capturas/img_8.png)
+
+<table>
+<tr>
+<td width="33%"><img src="capturas/img_9.png" alt="Nuevo espacio" /></td>
+<td width="33%"><img src="capturas/img_10.png" alt="Editar espacio" /></td>
+<td width="33%"><img src="capturas/img_11.png" alt="Eliminar espacio" /></td>
+</tr>
+<tr><td align="center"><sub>Nuevo espacio</sub></td><td align="center"><sub>Editar espacio</sub></td><td align="center"><sub>Eliminar espacio</sub></td></tr>
+</table>
+
+**Gestión de reservas.** Visualiza **todas** las reservas, **aprueba o rechaza** las pendientes y edítalas si es necesario.
+
+![Todas las reservas](capturas/img_12.png)
+
+<table>
+<tr>
+<td width="50%"><img src="capturas/img_13.png" alt="Editar reserva" /></td>
+<td width="50%"><img src="capturas/img_14.png" alt="Cancelar reserva (admin)" /></td>
+</tr>
+<tr><td align="center"><sub>Editar reserva (revalida las reglas)</sub></td><td align="center"><sub>Cancelar reserva</sub></td></tr>
+</table>
+
+**Gestión de usuarios.** Crea, edita y elimina cuentas asignando el rol `admin` o `usuario`.
+
+![Usuarios registrados](capturas/img_15.png)
+
+<table>
+<tr>
+<td width="50%"><img src="capturas/img_17.png" alt="Nuevo usuario" /></td>
+<td width="50%"><img src="capturas/img_16.png" alt="Editar usuario" /></td>
+</tr>
+<tr><td align="center"><sub>Nuevo usuario</sub></td><td align="center"><sub>Editar usuario</sub></td></tr>
+</table>
 
 <br/>
 
