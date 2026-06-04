@@ -58,7 +58,7 @@
 | Integrante | Rol principal | GitHub |
 |:---|:---|:---:|
 | **Juan Cardona** | Frontend · DevOps · Integración | [![@Juanka690](https://img.shields.io/badge/-@Juanka690-181717?style=flat-square&logo=github)](https://github.com/Juanka690) |
-| **Miguel** | Backend · Base de datos | [![@Miguel-cast](https://img.shields.io/badge/-@Miguel--cast-181717?style=flat-square&logo=github)](https://github.com/Miguel-cast) |
+| **Miguel Castaño** | Backend · Base de datos | [![@Miguel-cast](https://img.shields.io/badge/-@Miguel--cast-181717?style=flat-square&logo=github)](https://github.com/Miguel-cast) |
 
 </div>
 
