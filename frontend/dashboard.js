@@ -188,14 +188,18 @@ function renderResRows(list, withActions = true) {
     const who = isAdmin ? `<span>${I.users}${esc(usrName(r.id_usuario))}</span>` : "";
     let actions = "";
     if (withActions) {
-      if (isAdmin && r.estado === "esperando") {
+      if (isAdmin) {
+        const aprob = r.estado === "esperando"
+          ? `<button class="btn btn-ok btn-sm" data-action="aprobar" data-id="${r.id_reserva}">${I.check} Aprobar</button>
+             <button class="btn btn-bad btn-sm" data-action="rechazar" data-id="${r.id_reserva}">${I.x} Rechazar</button>`
+          : "";
         actions = `<div class="res-actions">
-          <button class="btn btn-ok btn-sm" data-action="aprobar" data-id="${r.id_reserva}">${I.check} Aprobar</button>
-          <button class="btn btn-bad btn-sm" data-action="rechazar" data-id="${r.id_reserva}">${I.x} Rechazar</button></div>`;
-      } else if (!isAdmin && r.estado !== "rechazada") {
+          ${aprob}
+          <button class="btn btn-ghost btn-sm" data-action="edit-reserva" data-id="${r.id_reserva}">${I.edit}</button>
+          <button class="btn btn-ghost btn-sm" data-action="del-reserva" data-id="${r.id_reserva}">${I.trash}</button>
+        </div>`;
+      } else if (r.estado !== "rechazada") {
         actions = `<div class="res-actions"><button class="btn btn-bad btn-sm" data-action="cancel-reserva" data-id="${r.id_reserva}">${I.trash} Cancelar</button></div>`;
-      } else if (isAdmin) {
-        actions = `<div class="res-actions"><button class="btn btn-ghost btn-sm" data-action="del-reserva" data-id="${r.id_reserva}">${I.trash}</button></div>`;
       }
     }
     return `
@@ -236,9 +240,12 @@ async function renderUsuarios() {
       <div class="avatar">${initials(u.correo)}</div>
       <div class="uinfo"><div class="un">${esc(u.nombre)}</div><div class="ue">${esc(u.correo)}</div></div>
       <span class="badge rol-${u.rol} urole-badge">${esc(u.rol)}</span>
-      ${u.id_usuario !== userId
-        ? `<button class="btn btn-bad btn-sm" data-action="del-usuario" data-id="${u.id_usuario}">${I.trash}</button>`
-        : `<span class="badge rol-usuario">Tú</span>`}
+      <div class="res-actions">
+        <button class="btn btn-ghost btn-sm" data-action="edit-usuario" data-id="${u.id_usuario}">${I.edit}</button>
+        ${u.id_usuario !== userId
+          ? `<button class="btn btn-bad btn-sm" data-action="del-usuario" data-id="${u.id_usuario}">${I.trash}</button>`
+          : `<span class="badge rol-usuario">Tú</span>`}
+      </div>
     </div>`).join("")}</div>`;
 }
 
@@ -313,6 +320,84 @@ function openReservaModal(esp) {
   });
 }
 
+// ═══════════ MODAL: usuario (crear / editar) ═══════════
+function openUsuarioModal(usr) {
+  const u = usr || {};
+  const editing = !!usr;
+  openModal(`
+    <h3>${editing ? "Editar usuario" : "Nuevo usuario"}</h3>
+    <p class="msub">${editing ? "Actualiza los datos de la cuenta." : "Crea una cuenta en el sistema."}</p>
+    <form id="f-usuario">
+      <div class="f"><label>Nombre completo</label><input id="u-nombre" value="${esc(u.nombre || "")}" required placeholder="Juan Pérez" /></div>
+      <div class="f"><label>Correo</label><input id="u-correo" type="email" value="${esc(u.correo || "")}" required placeholder="correo@institución.edu" /></div>
+      <div class="f-row">
+        <div class="f"><label>Rol</label><select id="u-rol">
+          <option value="usuario" ${u.rol === "usuario" ? "selected" : ""}>usuario</option>
+          <option value="admin" ${u.rol === "admin" ? "selected" : ""}>admin</option>
+        </select></div>
+        <div class="f"><label>Contraseña${editing ? " <span style='opacity:.55;font-weight:400'>(opcional)</span>" : ""}</label>
+          <input id="u-pass" type="password" minlength="6" ${editing ? "" : "required"} placeholder="${editing ? "Dejar en blanco" : "Mín. 6 caracteres"}" /></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? "Guardar cambios" : "Crear usuario"}</button>
+      </div>
+    </form>`);
+
+  $("f-usuario").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const body = { nombre: $("u-nombre").value.trim(), correo: $("u-correo").value.trim(), rol: $("u-rol").value };
+    const pass = $("u-pass").value;
+    if (pass) body.contrasena = pass;
+    const res = editing ? await apiUsuarios.update(usr.id_usuario, body) : await apiUsuarios.create(body);
+    if (!res.ok) { toast(res.data.detail || "Error al guardar", "error"); return; }
+    toast(editing ? "Usuario actualizado" : "Usuario creado");
+    closeModal();
+    await ensureUsuarios(true);
+    renderUsuarios();
+    if ($("view-inicio").classList.contains("active")) renderInicio();
+  });
+}
+
+// ═══════════ MODAL: editar reserva ═══════════
+function openReservaEditModal(r) {
+  if (!r) return;
+  const opts = state.espacios.map(e =>
+    `<option value="${e.id_espacio}" ${e.id_espacio === r.id_espacio ? "selected" : ""}>${esc(e.nombre)}</option>`).join("");
+  openModal(`
+    <h3>Editar reserva</h3>
+    <p class="msub">Se revalidan las 9 reglas de negocio al guardar.</p>
+    <form id="f-reserva-edit">
+      <div class="f"><label>Espacio</label><select id="re-espacio">${opts}</select></div>
+      <div class="f"><label>Fecha</label><input id="re-fecha" type="date" value="${r.fecha}" required /></div>
+      <div class="f-row">
+        <div class="f"><label>Hora inicio</label><input id="re-inicio" type="time" value="${fmtTime(r.hora_inicio)}" required /></div>
+        <div class="f"><label>Hora fin</label><input id="re-fin" type="time" value="${fmtTime(r.hora_fin)}" required /></div>
+      </div>
+      <div class="f"><label>Asistentes</label><input id="re-asist" type="number" min="1" value="${r.cantidad_asistentes}" required /></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>`);
+
+  $("f-reserva-edit").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const body = {
+      id_espacio: parseInt($("re-espacio").value, 10),
+      fecha: $("re-fecha").value,
+      hora_inicio: $("re-inicio").value + ":00",
+      hora_fin: $("re-fin").value + ":00",
+      cantidad_asistentes: parseInt($("re-asist").value, 10),
+    };
+    const { ok, data } = await apiReservas.update(r.id_reserva, body);
+    if (!ok) { toast(data.detail || "No se pudo actualizar la reserva", "error"); return; }
+    toast("Reserva actualizada");
+    closeModal();
+    refreshReservasViews();
+  });
+}
+
 // ═══════════ Delegación de acciones ═══════════
 document.addEventListener("click", async (e) => {
   const btn = e.target.closest("[data-action]");
@@ -320,8 +405,12 @@ document.addEventListener("click", async (e) => {
   const id = parseInt(btn.dataset.id, 10);
   const action = btn.dataset.action;
 
+  if (action === "new-espacio")   return openEspacioModal();
   if (action === "reservar")      return openReservaModal(state.espById.get(id));
   if (action === "edit-espacio")  return openEspacioModal(state.espById.get(id));
+  if (action === "new-usuario")   return openUsuarioModal();
+  if (action === "edit-usuario")  return openUsuarioModal(state.usrById.get(id));
+  if (action === "edit-reserva")  { await ensureEspacios(); return openReservaEditModal(state.reservas.find(r => r.id_reserva === id)); }
 
   if (action === "del-espacio") {
     if (await confirmModal("Eliminar espacio", "Esta acción no se puede deshacer.")) {
