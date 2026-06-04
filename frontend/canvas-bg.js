@@ -18,7 +18,10 @@
 
   // Opacidades aleatorias por punto (como el componente original)
   const opacities = [0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 1.0];
-  const colorVecs = Array.from({ length: 6 }, () => new THREE.Vector3(1, 1, 1)); // blanco
+  // Mezcla blanco + violeta (#8b5cf6) para combinar con el acento de la app
+  const W = new THREE.Vector3(1, 1, 1);
+  const V = new THREE.Vector3(0.545, 0.361, 0.965);
+  const colorVecs = [W, W, W, W, V, V];
 
   const uniforms = {
     u_time:       { value: 0.0 },

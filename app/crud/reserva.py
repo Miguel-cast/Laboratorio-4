@@ -8,7 +8,7 @@ from datetime import datetime, date, time, timedelta
 
 ESTADOS_BLOQUEAN = ["esperando", "aprobada"]
 
-def validar_reglas(db: Session, data: ReservaCreate, id_usuario: int):
+def validar_reglas(db: Session, data: ReservaCreate, id_usuario: int, exclude_id: int = None):
     # F: hora_inicio < hora_fin
     if data.hora_inicio >= data.hora_fin:
         raise HTTPException(status_code=400, detail="La hora de inicio debe ser menor que la hora de fin")
@@ -40,8 +40,8 @@ def validar_reglas(db: Session, data: ReservaCreate, id_usuario: int):
     if data.cantidad_asistentes > espacio.capacidad:
         raise HTTPException(status_code=400, detail=f"La cantidad de asistentes supera la capacidad del espacio ({espacio.capacidad})")
 
-    # C: sin superposición
-    conflicto = db.query(Reserva).filter(
+    # C: sin superposición (excluye la propia reserva al editar)
+    q = db.query(Reserva).filter(
         and_(
             Reserva.id_espacio == data.id_espacio,
             Reserva.fecha      == data.fecha,
@@ -49,7 +49,10 @@ def validar_reglas(db: Session, data: ReservaCreate, id_usuario: int):
             Reserva.hora_inicio < data.hora_fin,
             Reserva.hora_fin    > data.hora_inicio,
         )
-    ).first()
+    )
+    if exclude_id is not None:
+        q = q.filter(Reserva.id_reserva != exclude_id)
+    conflicto = q.first()
     if conflicto:
         raise HTTPException(status_code=400, detail="El espacio ya tiene una reserva activa en ese horario y fecha")
 
@@ -74,6 +77,21 @@ def create_reserva(db: Session, data: ReservaCreate, id_usuario: int):
         estado              = "esperando"
     )
     db.add(reserva)
+    db.commit()
+    db.refresh(reserva)
+    return reserva
+
+def update_reserva(db: Session, id: int, data: ReservaCreate):
+    reserva = get_reserva(db, id)
+    if not reserva:
+        raise HTTPException(status_code=404, detail="Reserva no encontrada")
+    # Revalida todas las reglas de negocio, excluyendo la propia reserva del choque
+    validar_reglas(db, data, reserva.id_usuario, exclude_id=id)
+    reserva.id_espacio          = data.id_espacio
+    reserva.fecha               = data.fecha
+    reserva.hora_inicio         = data.hora_inicio
+    reserva.hora_fin            = data.hora_fin
+    reserva.cantidad_asistentes = data.cantidad_asistentes
     db.commit()
     db.refresh(reserva)
     return reserva

@@ -77,7 +77,7 @@
           <h1>Espacios <em>institucionales</em></h1>
           <p id="espacios-sub">Selecciona un espacio para reservar</p>
         </div>
-        <button class="btn btn-primary admin-only hidden" id="btn-nuevo-espacio">
+        <button class="btn btn-primary admin-only hidden" data-action="new-espacio">
           <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Nuevo espacio
         </button>
@@ -103,6 +103,10 @@
           <h1>Usuarios <em>registrados</em></h1>
           <p>Gestiona las cuentas del sistema</p>
         </div>
+        <button class="btn btn-primary" data-action="new-usuario">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nuevo usuario
+        </button>
       </div>
       <div id="lista-usuarios"></div>
     </section>

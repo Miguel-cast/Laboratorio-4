@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.db import get_db
 from app.schemas.reserva import ReservaCreate, ReservaUpdate, ReservaResponse
-from app.crud.reserva import get_reservas, get_reserva, create_reserva, update_estado_reserva, delete_reserva
+from app.crud.reserva import get_reservas, get_reserva, create_reserva, update_reserva, update_estado_reserva, delete_reserva
 from app.auth.jwt import get_current_user, require_admin
 from app.models.usuario import Usuario
 from typing import List
@@ -32,6 +32,10 @@ def obtener(id: int, db: Session = Depends(get_db), usuario: Usuario = Depends(g
 @router.put("/{id}/estado", response_model=ReservaResponse)
 def cambiar_estado(id: int, data: ReservaUpdate, db: Session = Depends(get_db), _=Depends(require_admin)):
     return update_estado_reserva(db, id, data.estado)
+
+@router.put("/{id}", response_model=ReservaResponse)
+def editar(id: int, data: ReservaCreate, db: Session = Depends(get_db), _=Depends(require_admin)):
+    return update_reserva(db, id, data)
 
 @router.delete("/{id}")
 def cancelar(id: int, db: Session = Depends(get_db), usuario: Usuario = Depends(get_current_user)):
