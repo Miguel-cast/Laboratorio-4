@@ -52,12 +52,14 @@ body.dark-page {
 .bg-radial {
   position: fixed;
   inset: 0;
-  /* Oscuro solo detras del formulario; los bordes dejan ver los puntos */
-  background: radial-gradient(ellipse 48% 55% at 50% 50%,
-    rgba(0,0,0,0.85) 0%,
-    rgba(0,0,0,0.55) 32%,
-    rgba(0,0,0,0.15) 62%,
-    transparent 85%);
+  /* Glow violeta ambiental + oscurecido detras del formulario */
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 40%, rgba(139,92,246,0.18) 0%, rgba(99,102,241,0.08) 38%, transparent 64%),
+    radial-gradient(ellipse 48% 55% at 50% 50%,
+      rgba(0,0,0,0.85) 0%,
+      rgba(0,0,0,0.55) 32%,
+      rgba(0,0,0,0.15) 62%,
+      transparent 85%);
   z-index: 1;
   pointer-events: none;
 }
@@ -142,14 +144,14 @@ body.dark-page {
   position: absolute;
   inset: -8px;
   border-radius: 9999px;
-  background: #f3f4f6;
-  opacity: 0.35;
+  background: #8b5cf6;
+  opacity: 0.4;
   filter: blur(14px);
   pointer-events: none;
   transition: opacity 0.3s ease, filter 0.3s ease, inset 0.3s ease;
 }
 .nav-cta-wrap:hover .nav-cta-glow {
-  opacity: 0.6;
+  opacity: 0.7;
   filter: blur(18px);
   inset: -11px;
 }
@@ -160,12 +162,12 @@ body.dark-page {
   border-radius: 9999px;
   font-size: 0.76rem;
   font-weight: 600;
-  color: #000;
-  background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 100%);
-  transition: background 0.2s ease;
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  transition: filter 0.2s ease;
 }
 .nav-cta-wrap:hover .nav-cta {
-  background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%);
+  filter: brightness(1.12);
 }
 
 /* ═══════════ Layout ═══════════ */
@@ -260,8 +262,9 @@ body.dark-page {
 .auth-pill::placeholder { color: rgba(255, 255, 255, 0.3); }
 .auth-pill:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.32);
-  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(139, 92, 246, 0.06);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
 }
 
 /* Quita el fondo amarillo del autofill de Chrome */
@@ -289,7 +292,7 @@ body.dark-page {
   overflow: hidden;
   transition: background 0.2s ease;
 }
-.arrow-btn:hover { background: rgba(255, 255, 255, 0.2); }
+.arrow-btn:hover { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-color: transparent; }
 .arrow-track {
   position: relative;
   display: block;
@@ -311,13 +314,13 @@ body.dark-page {
 .arrow-btn:hover .arrow-track span:nth-child(1) { transform: translateX(130%); }
 .arrow-btn:hover .arrow-track span:nth-child(2) { transform: translateX(0); }
 
-/* Botón sólido blanco */
+/* Botón sólido — gradiente violeta (acento de la app) */
 .dark-page .btn-solid {
   width: 100%;
   padding: 0.9rem;
   border-radius: 9999px;
-  background: #fff;
-  color: #000;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
   border: none;
@@ -325,16 +328,17 @@ body.dark-page {
   font-family: inherit;
   position: relative;
   overflow: hidden;
-  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 8px 24px -8px rgba(99, 102, 241, 0.65);
+  transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 .dark-page .btn-solid::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 55%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 55%);
   pointer-events: none;
 }
-.dark-page .btn-solid:hover { background: rgba(255, 255, 255, 0.88); transform: translateY(-1px); }
+.dark-page .btn-solid:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.8); }
 .dark-page .btn-solid:active { transform: translateY(0); }
 
 /* Separador "or" */
